@@ -29,6 +29,6 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('notes', NoteController::class)->only(['index', 'store']);
 
     Route::middleware(AuthNoteActionsMiddleware::class)->group(function () {
-        Route::resource('notes', NoteController::class)->only(['show', 'update', 'delete']);
+        Route::resource('notes', NoteController::class)->only(['show', 'update', 'destroy']);
     });
 });

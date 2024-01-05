@@ -7,7 +7,6 @@ use App\Http\Requests\UpdateNoteRequest;
 use App\Http\Resources\NoteResource;
 use App\Models\Note;
 use App\Services\NoteService;
-use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,7 +22,6 @@ class NoteController extends Controller
 ////            'notes' => Auth::user()->notes()->paginate(1),
 ////            'notes' => Note::where('user_id', Auth::user()->id)->get(),
 //        ]);
-        Debugbar::error('Error!');
 
         return NoteResource::collection(Auth::user()->notes()->paginate(1));
     }
@@ -36,7 +34,7 @@ class NoteController extends Controller
         $note = NoteService::store(Auth::user(), $request->toArray());
 
         if ($note) {
-            return response()->json(['message' => 'Note created successfully', 'note' => $note]);
+            return response()->json(['message' => 'Note created successfully', 'data' => $note]);
         }
 
         return response()->json(['message' => 'Note was not created'], 500);
@@ -45,11 +43,9 @@ class NoteController extends Controller
     /**
      * Display the note resource.
      */
-    public function show(string $id): JsonResponse
+    public function show(string $id)
     {
-        return response()->json([
-            'note' => Note::find($id),
-        ]);
+        return new NoteResource(Note::find($id));
     }
 
     /**
