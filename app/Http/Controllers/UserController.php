@@ -16,6 +16,6 @@ class UserController extends Controller
             return response()->json(['message' => 'User deleted successfully']);
         }
 
-        return response()->json(['message' => 'User was not deleted', 500]);
+        return response()->json(['message' => 'User was not deleted'], 500);
     }
 }

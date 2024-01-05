@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -23,7 +23,7 @@ class User extends Authenticatable
         'email',
         'password',
         'birth_date',
-//        'gender',
+        'gender',
     ];
 
     /**
@@ -46,4 +46,12 @@ class User extends Authenticatable
         'birth_date' => 'date',
         'password' => 'hashed',
     ];
+
+    /**
+     * Get the notes written by the user.
+     */
+    public function notes(): HasMany
+    {
+        return $this->hasMany(Note::class);
+    }
 }

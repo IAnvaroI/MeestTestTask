@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\User;
-use Exception;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Throwable;
@@ -32,9 +31,8 @@ class UserService
     public static function delete(string $id): bool
     {
         try {
-            if (!User::destroy($id)) {
-                throw new Exception("Model not found.", 404);
-            }
+            $user = User::findOrFail($id);
+            $user->delete();
 
             return true;
         } catch (Throwable $e) {
