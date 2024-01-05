@@ -4,8 +4,6 @@ namespace App\Services;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
-use Throwable;
 
 class UserService
 {
@@ -14,31 +12,17 @@ class UserService
      */
     public static function store(array $fields)
     {
-        try {
-            $fields['password'] = Hash::make($fields['password']);
+        $fields['password'] = Hash::make($fields['password']);
 
-            return User::create($fields);
-        } catch (Throwable $e) {
-            Log::error($e->getMessage() . "\n" . $e->getTraceAsString());
-
-            return false;
-        }
+        return User::create($fields);
     }
 
     /**
      * Remove the user from storage.
      */
-    public static function delete(string $id): bool
+    public static function delete(string $id)
     {
-        try {
-            $user = User::findOrFail($id);
-            $user->delete();
-
-            return true;
-        } catch (Throwable $e) {
-            Log::error($e->getMessage() . "\n" . $e->getTraceAsString());
-
-            return false;
-        }
+        $user = User::findOrFail($id);
+        $user->delete();
     }
 }

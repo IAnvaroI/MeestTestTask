@@ -17,31 +17,21 @@ class NoteController extends Controller
      */
     public function index()
     {
-//        return response()->json([
-//            'notes' => NoteResource::collection(Auth::user()->notes()->paginate(1))->response()->getData(),
-////            'notes' => Auth::user()->notes()->paginate(1),
-////            'notes' => Note::where('user_id', Auth::user()->id)->get(),
-//        ]);
-
         return NoteResource::collection(Auth::user()->notes()->paginate(1));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created note in storage.
      */
     public function store(StoreNoteRequest $request): JsonResponse
     {
         $note = NoteService::store(Auth::user(), $request->toArray());
 
-        if ($note) {
-            return response()->json(['message' => 'Note created successfully', 'data' => $note]);
-        }
-
-        return response()->json(['message' => 'Note was not created'], 500);
+        return response()->json(['message' => 'Note created successfully', 'data' => $note]);
     }
 
     /**
-     * Display the note resource.
+     * Display the note.
      */
     public function show(string $id)
     {
@@ -55,11 +45,7 @@ class NoteController extends Controller
     {
         $note = NoteService::update($id, $request->toArray());
 
-        if ($note) {
-            return response()->json(['message' => 'Note updated successfully', 'note' => $note]);
-        }
-
-        return response()->json(['message' => 'Note was not updated'], 500);
+        return response()->json(['message' => 'Note updated successfully', 'note' => $note]);
     }
 
     /**
@@ -67,12 +53,8 @@ class NoteController extends Controller
      */
     public function destroy(string $id): JsonResponse
     {
-        $status = NoteService::delete($id);
+        NoteService::delete($id);
 
-        if ($status) {
-            return response()->json(['message' => 'Note deleted successfully']);
-        }
-
-        return response()->json(['message' => 'Note was not deleted'], 500);
+        return response()->json(['message' => 'Note deleted successfully']);
     }
 }

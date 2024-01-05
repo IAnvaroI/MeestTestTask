@@ -15,13 +15,9 @@ class AuthController extends Controller
     {
         $user = UserService::store($request->toArray());
 
-        if ($user) {
-            $token = $user->createToken('authToken')->accessToken;
+        $token = $user->createToken('authToken')->accessToken;
 
-            return response()->json(['token' => $token, 'user' => $user]);
-        }
-
-        return response()->json(['message' => 'User was not registered']);
+        return response()->json(['token' => $token, 'user' => $user]);
     }
 
     public function login(LoginRequest $request): JsonResponse
