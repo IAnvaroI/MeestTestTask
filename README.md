@@ -20,13 +20,13 @@ sudo docker compose exec app composer install
 ```
 sudo docker compose exec app php artisan key:generate
 ```
-- Install Laravel Passport package
-```
-sudo docker compose exec app php artisan passport:install
-```
 - Run all needed migrations
 ```
 sudo docker compose exec app php artisan migrate
+```
+- Install Laravel Passport package
+```
+sudo docker compose exec app php artisan passport:install
 ```
 ## Setup connection to database from PhpStorm
 1. Add MySQL data source in database menu 
